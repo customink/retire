@@ -26,6 +26,7 @@ namespace :test do
 
     test.test_files = FileList.new( file_strings.join(', ') )
     test.verbose = true
+    test.warning = false  # Disable all warnings, we don't care since this library is so out of date...
   end
 
   Rake::TestTask.new(:integration) do |test|
