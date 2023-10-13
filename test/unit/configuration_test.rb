@@ -6,11 +6,15 @@ module Tire
 
     def teardown
       Tire::Configuration.reset
-      ENV['ELASTICSEARCH_URL'] = nil
+
+      # Be a good citizen and don't screw up other tests ;-)
+      ENV['ELASTICSEARCH_URL'] = @elasticsearch_url
     end
 
     context "Configuration" do
       setup do
+        @elasticsearch_url = ENV['ELASTICSEARCH_URL'] || 'http://localhost:9200'
+
         Configuration.instance_variable_set(:@url,    nil)
         Configuration.instance_variable_set(:@client, nil)
       end
@@ -20,7 +24,7 @@ module Tire
       end
 
       should "return default URL" do
-        assert_equal 'http://localhost:9200', Configuration.url
+        assert_equal @elasticsearch_url, Configuration.url
       end
 
       should "use environment variable, if present" do
@@ -66,7 +70,7 @@ module Tire
         Configuration.url 'http://example.com'
         assert_equal      'http://example.com', Configuration.url
         Configuration.reset :url
-        assert_equal      'http://localhost:9200', Configuration.url
+        assert_equal      @elasticsearch_url, Configuration.url
       end
 
       should "allow to reset the configuration for all properties" do
@@ -74,7 +78,7 @@ module Tire
         Configuration.wrapper Hash
         assert_equal          'http://example.com', Configuration.url
         Configuration.reset
-        assert_equal          'http://localhost:9200', Configuration.url
+        assert_equal          @elasticsearch_url, Configuration.url
         assert_equal          HTTP::Client::RestClient, Configuration.client
       end
     end

@@ -4,7 +4,11 @@ module Tire
   class MultiSearchTest < Test::Unit::TestCase
 
     context "Multi::Search" do
-      setup { Configuration.reset }
+      setup do
+        Configuration.reset
+
+        @elasticsearch_url = ENV['ELASTICSEARCH_URL'] || 'http://localhost:9200'
+      end
 
       should "be initialized with index" do
         @search = Tire::Search::Multi::Search.new 'foo'
@@ -145,7 +149,7 @@ module Tire
 
         should "contain host" do
           @search = Tire::Search::Multi::Search.new
-          assert_equal 'http://localhost:9200/_msearch', @search.url
+          assert_equal "#{@elasticsearch_url}/_msearch", @search.url
         end
 
       end
@@ -283,7 +287,7 @@ module Tire
         should "perform the request" do
           Configuration.client.expects(:get).
             with do |url, payload|
-              assert_equal 'http://localhost:9200/_msearch', url
+              assert_equal "#{@elasticsearch_url}/_msearch", url
               assert       payload.include?('match_all')
             end.
             returns(@response)
