@@ -1,7 +1,5 @@
 ENV['DEBUG'] = 'true'
 
-puts "*** TestHelper loaded"
-
 require 'rubygems'
 require 'bundler/setup'
 
@@ -124,7 +122,6 @@ module Test::Integration
     end
 
     ::RestClient.delete "#{URL}/articles-test"     rescue nil
-    puts "#{URL}/articles-test"
     ::RestClient.post   "#{URL}/articles-test", ''
     fixtures_path.join('articles').entries.each do |f|
       filename = f.to_s
