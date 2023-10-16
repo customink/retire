@@ -45,7 +45,7 @@ module Tire
         ActiveRecordArticle.delete_all
         Tire.index('active_record_articles').delete
 
-        load File.expand_path('../../models/active_record_models.rb', __FILE__)
+        # load File.expand_path('../../models/active_record_models.rb', __FILE__)
       end
 
       teardown do
@@ -108,7 +108,9 @@ module Tire
         ActiveRecordArticle.create! :title => 'Test'
 
         assert_raise Search::SearchRequestFailed do
+          puts "\n** INFO: This next query is expected to fail, so ignore any messages about a failed query"
           ActiveRecordArticle.search '[x'
+          puts "** INFO: The previous query is expected to fail, so ignore any messages about a failed query\n"
         end
       end
 
@@ -144,14 +146,18 @@ module Tire
           end
 
           assert_instance_of ActiveRecordArticle, results.first
+
           assert_equal 'foo', results.first.title
           assert_equal 3, a.length # Make sure we have the "real model"
         end
 
         should "load records with options on query search" do
-          assert_equal ActiveRecordArticle.find(['1'], :include => 'comments').first,
-                       ActiveRecordArticle.search('"Test 1"',
-                                                  :load => { :include => 'comments' }).results.first
+          # This query was written for ActiveRecord 2.x, it has been rewritten below
+          # assert_equal ActiveRecordArticle.find(['1'], :include => 'comments').first,
+          #             ActiveRecordArticle.search('"Test 1"', :load => { :include => 'comments' }).results.first
+
+          assert_equal ActiveRecordArticle.includes(:comments).find(['1']).first,
+                       ActiveRecordArticle.includes(:comments).search('"Test 1"').results.first
         end
 
         should "return empty collection for nonmatching query" do
@@ -330,6 +336,8 @@ module Tire
               end
               assert_equal 4, results.size
               assert results.all? { |r| assert_instance_of ActiveRecordArticle, r }
+              pp results.first
+              pp results
               assert_equal 'Test6', results.first.title
             end
 
@@ -626,11 +634,13 @@ module Tire
 
         should "return matching queries when percolating" do
           a = ActiveRecordModelWithPercolation.new :title => 'Warning!'
+          byebug
           assert_contains a.percolate, 'alert'
         end
 
         should "return matching queries when saving" do
           a = ActiveRecordModelWithPercolation.create! :title => 'Warning!'
+          byebug
           assert_contains a.matches, 'alert'
         end
       end
