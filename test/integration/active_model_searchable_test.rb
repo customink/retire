@@ -8,7 +8,7 @@ module Tire
 
     def setup
       super
-      Redis::Persistence.config.redis = Redis.new db: ENV['REDIS_PERSISTENCE_TEST_DATABASE'] || 14
+      Redis::Persistence.config.redis = Redis.new(host: 'customink-redis', db: ENV['REDIS_PERSISTENCE_TEST_DATABASE'] || 14 )
       Redis::Persistence.config.redis.flushdb
       @model = SupermodelArticle.new :title => 'Test'
     end
@@ -30,7 +30,10 @@ module Tire
         assert_equal 'czech', SupermodelArticle.mapping[:title][:analyzer]
         assert_equal 15,      SupermodelArticle.mapping[:title][:boost]
 
-        assert_equal 'czech', SupermodelArticle.index.mapping['supermodel_article']['properties']['title']['analyzer']
+        # This test seems to be incorrect, the #mapping response from ElasticSearch contains
+        # the results under the namespace 'mappings'
+        # assert_equal 'czech', SupermodelArticle.index.mapping['supermodel_article']['properties']['title']['analyzer']
+        assert_equal 'czech', SupermodelArticle.index.mapping['mappings']['supermodel_article']['properties']['title']['analyzer']
       end
 
       should "save document into index on save and find it with score" do
