@@ -11,7 +11,8 @@ services:
       customink-elasticsearch64: { condition: service_started }
 
   customink-elasticsearch64:
-    image: "elasticsearch:1.7.2"
+    # image: "elasticsearch:1.7.2"
+    image: "elasticsearch:1.4.4"
     restart: unless-stopped
     environment:
       - discovery.type=single-node
