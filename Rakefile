@@ -31,8 +31,19 @@ namespace :test do
 
   Rake::TestTask.new(:integration) do |test|
     test.libs << 'lib' << 'test'
-    test.test_files = FileList["test/integration/*_test.rb"]
-    test.verbose = true
+
+    file_strings = []
+
+    # If there is a second argument, then assume it is a test file string, otherwise run all unit tests
+    if ARGV.length > 1
+      file_strings.concat(ARGV.slice(1, ARGV.length))
+    else
+      file_strings << "test/integration/*_test.rb"
+    end
+
+    test.test_files = FileList.new( file_strings.join(', ') )
+    test.verbose = false
+    test.warning = false  # Disable all warnings, we don't care since this library is so out of date...
   end
 end
 
