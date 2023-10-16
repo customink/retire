@@ -3,7 +3,7 @@ services:
     build: { context: ., dockerfile: Dockerfile }
     command: sleep infinity
     environment:
-      XGEM_HOME: /workspaces/retire/vendor/bundle/ruby
+      GEM_HOME: /workspaces/retire/vendor/bundle/ruby
       ELASTICSEARCH_URL: http://customink-elasticsearch64:9200
     privileged: true
     user: vscode
@@ -23,6 +23,9 @@ services:
         "/var/lib/docker/codespacemount/data-elasticsearch:/usr/share/elasticsearch/data",
       ]
 
+  customink-redis:
+    image: redis
+    restart: unless-stopped
 
 networks:
   default: { ipam: { config: [{ subnet: 192.168.176.0/24 }] } }
