@@ -142,6 +142,9 @@ module Tire
         end
 
         should "return value statistics for each bucket by script" do
+          # We need to enable dynamic scripting in ElasticSearch for this test to work
+          omit 'Skipping test because test env is not set up to allow dynamic scripting'
+
           s = Tire.search('articles-test', search_type: 'count') do
             query { all }
             facet 'published_on' do
@@ -260,6 +263,9 @@ module Tire
         end
 
         should "return computed statistical data by given script" do
+          # We need to enable dynamic scripting in ElasticSearch for this test to work
+          omit 'Skipping test because test env is not set up to allow dynamic scripting'
+
           s = Tire.search('articles-test') do
             query { all }
             facet 'word_stats' do

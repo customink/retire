@@ -6,6 +6,10 @@ module Tire
     include Test::Integration
 
     context "ScriptFields" do
+      setup do
+        # We need to enable dynamic scripting in ElasticSearch for this test to work
+        omit 'Skipping test because test env is not set up to allow dynamic scripting'
+      end
 
       should "add multiple fields to the results" do
         # 1.json > title: "One", words: 125

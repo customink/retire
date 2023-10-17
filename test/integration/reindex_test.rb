@@ -29,7 +29,9 @@ module Tire
 
         Tire.index('reindex-test-new').refresh
         assert_equal 100, Tire.search('reindex-test-new').results.total
-        assert_equal '3', Tire.index('reindex-test-new').settings['index.number_of_shards']
+
+        # assert_equal '3', Tire.index('reindex-test-new').settings['index.number_of_shards']
+        assert_equal '3', Tire.index('reindex-test-new').settings['index']['number_of_shards']
       end
 
       should "reindex a portion of an index into a new index" do
