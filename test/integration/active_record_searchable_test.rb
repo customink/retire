@@ -337,8 +337,6 @@ module Tire
               end
               assert_equal 4, results.size
               assert results.all? { |r| assert_instance_of ActiveRecordArticle, r }
-              pp results.first
-              pp results
               assert_equal 'Test6', results.first.title
             end
 
@@ -636,13 +634,11 @@ module Tire
 
         should "return matching queries when percolating" do
           a = ActiveRecordModelWithPercolation.new :title => 'Warning!'
-
           assert_contains a.percolate, 'alert'
         end
 
         should "return matching queries when saving" do
           a = ActiveRecordModelWithPercolation.create! :title => 'Warning!'
-
           assert_contains a.matches, 'alert'
         end
       end
