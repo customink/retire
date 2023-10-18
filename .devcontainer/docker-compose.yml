@@ -1,0 +1,31 @@
+services:
+  retire:
+    build: { context: ., dockerfile: Dockerfile }
+    command: sleep infinity
+    environment:
+      GEM_HOME: /workspaces/retire/vendor/bundle/ruby
+      ELASTICSEARCH_URL: http://customink-elasticsearch64:9200
+    privileged: true
+    user: vscode
+    depends_on:
+      customink-elasticsearch64: { condition: service_started }
+
+  customink-elasticsearch64:
+    image: "elasticsearch:1.7.2"
+    restart: unless-stopped
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - 9200:9200
+    volumes:
+      [
+        "/var/lib/docker/codespacemount/data-elasticsearch:/usr/share/elasticsearch/data",
+      ]
+
+  customink-redis:
+    image: redis
+    restart: unless-stopped
+
+networks:
+  default: { ipam: { config: [{ subnet: 192.168.176.0/24 }] } }

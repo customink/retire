@@ -62,6 +62,10 @@ class ActiveRecordStat < ActiveRecord::Base
 end
 
 class ActiveRecordClassWithTireMethods < ActiveRecord::Base
+  # This is needed to avoid errors about connection pooling...
+  ActiveRecord::Base.establish_connection( :adapter => 'sqlite3', :database => ":memory:" )
+  ActiveRecord::Migration.verbose = false
+  ActiveRecord::Schema.define(:version => 1) { create_table(:active_record_class_with_tire_methods) { |t| t.string(:title) } }
 
   def self.mapping
     "THIS IS MY MAPPING!"

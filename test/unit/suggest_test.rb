@@ -5,7 +5,11 @@ module Tire
   class SuggestTest < Test::Unit::TestCase
 
     context "Suggest" do
-      setup { Configuration.reset }
+      setup do
+        Configuration.reset
+
+        @elasticsearch_url = ENV['ELASTICSEARCH_URL'] || 'http://localhost:9200'
+      end
 
       should "be initialized with single index" do
         s = Suggest::Suggest.new('index') do 
@@ -24,7 +28,7 @@ module Tire
             completion 'bar'
           end
         end
-        assert_match %r|localhost:9200/_suggest|, s.url
+        assert_match %r|#{@elasticsearch_url}/_suggest|, s.url
       end
 
       should "return curl snippet for debugging" do
@@ -34,7 +38,7 @@ module Tire
             completion 'bar'
           end
         end
-        assert_match %r|curl \-X GET 'http://localhost:9200/index/_suggest\?pretty' -d |, s.to_curl
+        assert_match %r|curl \-X GET '#{@elasticsearch_url}/index/_suggest\?pretty' -d |, s.to_curl
         assert_match %r|\s*{\s*"default-suggestion"\s*:\s*{\s*"text"\s*:\s*"foo"\s*,\s*"completion"\s*:\s*{\s*"field"\s*:\s*"bar"\s*}\s*}\s*}\s*|, s.to_curl
       end
 

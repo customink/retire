@@ -4,7 +4,11 @@ module Tire
   class CountTest < Test::Unit::TestCase
 
     context "Count" do
-      setup { Configuration.reset }
+      setup do
+        Configuration.reset
+
+        @elasticsearch_url = ENV['ELASTICSEARCH_URL'] || 'http://localhost:9200'
+      end
 
       should "be initialized with single index" do
         c = Search::Count.new('index')
@@ -15,7 +19,7 @@ module Tire
       should "count all documents by the leaving index empty" do
         c = Search::Count.new
         assert c.indices.empty?, "#{c.indices.inspect} should be empty"
-        assert_match %r|localhost:9200/_count|, c.url
+        assert_match %r|#{@elasticsearch_url}/_count|, c.url
       end
 
       should "limit count with document type" do
@@ -47,7 +51,7 @@ module Tire
 
       should "return curl snippet for debugging" do
         c = Search::Count.new('index') { term :title, 'foo' }
-        assert_match %r|curl \-X GET 'http://localhost:9200/index/_count\?pretty' -d |, c.to_curl
+        assert_match %r|curl \-X GET '#{@elasticsearch_url}/index/_count\?pretty' -d |, c.to_curl
         assert_match %r|"term"\s*:\s*"foo"|, c.to_curl
       end
 

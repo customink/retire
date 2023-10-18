@@ -1,0 +1,17 @@
+#!/bin/sh
+set -e
+
+if [ "$CODESPACES" = "true" ]; then
+  /usr/local/share/ci-devcontainer-ssh-create.sh
+  /usr/local/share/ci-devcontainer-vpn-create.sh
+fi
+
+if [ "$REMOTE_CONTAINERS" = "true" ]; then
+  sudo chown "$(whoami):$(whoami)" /workspaces
+fi
+
+gem install bundler:2.3.23
+
+# refresh Github SSH keys
+ssh-keygen -R github.com
+ssh-keyscan github.com >> ~/.ssh/known_hosts

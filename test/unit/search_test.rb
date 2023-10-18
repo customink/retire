@@ -5,7 +5,11 @@ module Tire
   class SearchTest < Test::Unit::TestCase
 
     context "Search" do
-      setup { Configuration.reset }
+      setup do
+        Configuration.reset
+
+        @elasticsearch_url = ENV['ELASTICSEARCH_URL'] || 'http://localhost:9200'
+      end
 
       should "be initialized with single index" do
         s = Search::Search.new('index') { query { string 'foo' } }
@@ -32,7 +36,7 @@ module Tire
 
       should "allow to search all indices by leaving index empty" do
         s = Search::Search.new { query { string 'foo' } }
-        assert_match %r|localhost:9200/_search|, s.url
+        assert_match %r|#{@elasticsearch_url}/_search|, s.url
       end
 
       should "allow to limit results with document type" do
@@ -117,7 +121,7 @@ module Tire
         s = Search::Search.new('index') do
           query { string 'title:foo' }
         end
-        assert_match %r|curl \-X GET 'http://localhost:9200/index/_search\?pretty' -d |, s.to_curl
+        assert_match %r|curl \-X GET '#{@elasticsearch_url}/index/_search\?pretty' -d |, s.to_curl
         assert_match %r|\s*{\s*"query"\s*:\s*"title:foo"\s*}\s*|, s.to_curl
       end
 

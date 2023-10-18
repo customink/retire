@@ -7,6 +7,11 @@ module Tire
 
     context "Custom score queries" do
 
+      setup do
+        # We need to enable dynamic scripting in ElasticSearch for this test to work
+        omit 'Skipping test because test env is not set up to allow dynamic scripting'
+      end
+
       should "allow to define custom score queries (base score on field value)" do
         s = Tire.search('articles-test') do
           query do

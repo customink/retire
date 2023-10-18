@@ -132,7 +132,7 @@ module Tire
         @response['hits']['hits'].group_by { |item| item['_type'] }.each do |type, items|
           raise NoMethodError, "You have tried to eager load the model instances, " +
                                "but Tire cannot find the model class because " +
-                               "document has no _type property." unless type
+                               "document has no _type property." unless type && ! type.empty?
 
           begin
             klass = type.camelize.constantize

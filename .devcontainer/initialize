@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+
+# create and chown directories
+
+# for elasticsearch
+mkdir -p /var/lib/docker/codespacemount/data-elasticsearch
+chown 1000:1000 /var/lib/docker/codespacemount/data-elasticsearch

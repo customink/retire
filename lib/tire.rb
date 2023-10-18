@@ -1,4 +1,5 @@
 require 'rest_client'
+require 'tire/rest_client_cipher_patch'
 require 'multi_json'
 require 'active_model'
 require 'hashr'

@@ -1,0 +1,44 @@
+{
+    "name": "retire",
+    "dockerComposeFile": ["docker-compose.yml"],
+    "service": "retire",
+    "containerEnv": {
+      "GITHUB_USER": "${localEnv:GITHUB_USER}",
+      "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN}"
+    },
+    "customizations": {
+      "codespaces": {
+        "repositories": {
+          "customink/*": {
+            "permissions": "write-all"
+          }
+        }
+      },
+      "vscode": {
+        "extensions": ["GitHub.copilot", "GitHub.copilot-chat"]
+      }
+    },
+    "forwardPorts": [4086],
+    "remoteEnv": {
+      "COMPOSE_HTTP_TIMEOUT": "300"
+    },
+    "features": {
+      "ghcr.io/devcontainers/features/common-utils": { "upgradePackages": false },
+      "ghcr.io/customink/features/ssh": {},
+      "ghcr.io/customink/features/vpn": {},
+      "ghcr.io/devcontainers/features/sshd": {},
+      "node": {
+        "version": "16"
+      }
+    },
+    "remoteUser": "vscode",
+    "initializeCommand": "./.devcontainer/initialize",
+    "postCreateCommand": "./.devcontainer/postCreate",
+    "hostRequirements": {
+      "cpus": 2
+    },
+    "workspaceFolder": "/workspaces/retire",
+    "mounts": [
+      "source=${localWorkspaceFolder},target=/workspaces/retire,type=bind,consistency=cached"
+    ]
+  }

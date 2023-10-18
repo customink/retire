@@ -1,0 +1,120 @@
+PATH
+  remote: .
+  specs:
+    tire (0.6.2)
+      activemodel (>= 6.0)
+      activesupport
+      ansi
+      hashr (~> 0.0.19)
+      multi_json (~> 1.3)
+      rake
+      rest-client
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    active_model_serializers (0.8.4)
+      activemodel (>= 3.0)
+    activemodel (6.0.6.1)
+      activesupport (= 6.0.6.1)
+    activerecord (6.0.6.1)
+      activemodel (= 6.0.6.1)
+      activesupport (= 6.0.6.1)
+    activesupport (6.0.6.1)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      i18n (>= 0.7, < 2)
+      minitest (~> 5.1)
+      tzinfo (~> 1.1)
+      zeitwerk (~> 2.2, >= 2.2.2)
+    ansi (1.5.0)
+    base64 (0.1.1)
+    bson (4.15.0)
+    bson_ext (1.5.1)
+    byebug (11.1.3)
+    concurrent-ruby (1.2.2)
+    connection_pool (2.4.1)
+    curb (1.0.5)
+    domain_name (0.5.20190701)
+      unf (>= 0.0.5, < 1.0.0)
+    faraday (2.7.11)
+      base64
+      faraday-net_http (>= 2.0, < 3.1)
+      ruby2_keywords (>= 0.0.4)
+    faraday-net_http (3.0.2)
+    hashr (0.0.22)
+    http-cookie (1.0.5)
+      domain_name (~> 0.5)
+    i18n (1.14.1)
+      concurrent-ruby (~> 1.0)
+    metaclass (0.0.4)
+    mime-types (3.5.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2023.1003)
+    minitest (5.20.0)
+    mocha (0.14.0)
+      metaclass (~> 0.0.1)
+    mongo (2.19.1)
+      bson (>= 4.14.1, < 5.0.0)
+    mongoid (8.1.2)
+      activemodel (>= 5.1, < 7.1, != 7.0.0)
+      concurrent-ruby (>= 1.0.5, < 2.0)
+      mongo (>= 2.18.0, < 3.0.0)
+      ruby2_keywords (~> 0.0.5)
+    multi_json (1.15.0)
+    netrc (0.11.0)
+    oj (3.16.1)
+    power_assert (2.0.3)
+    rake (13.0.6)
+    redis (5.0.7)
+      redis-client (>= 0.9.0)
+    redis-client (0.17.0)
+      connection_pool
+    redis-persistence (0.1.0)
+      activemodel (> 3.0)
+      hashr (~> 0.0.19)
+      multi_json (~> 1.1)
+      redis (> 2)
+    rest-client (2.0.2)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 4.0)
+      netrc (~> 0.8)
+    ruby2_keywords (0.0.5)
+    shoulda-context (2.0.0)
+    sqlite3 (1.6.7-x86_64-linux)
+    test-unit (3.6.1)
+      power_assert
+    thread_safe (0.3.6)
+    tzinfo (1.2.11)
+      thread_safe (~> 0.1)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.8.2)
+    yajl-ruby (1.4.3)
+    zeitwerk (2.6.12)
+
+PLATFORMS
+  x86_64-linux
+
+DEPENDENCIES
+  active_model_serializers (~> 0.8.0)
+  activerecord
+  activerecord-jdbcsqlite3-adapter
+  bson_ext
+  byebug
+  curb
+  faraday
+  jdbc-sqlite3
+  minitest
+  mocha (~> 0.13)
+  mongoid
+  oj
+  redis-persistence
+  rest-client (= 2.0.2)
+  shoulda-context
+  sqlite3
+  test-unit
+  tire!
+  yajl-ruby (~> 1.0)
+
+BUNDLED WITH
+   2.3.23

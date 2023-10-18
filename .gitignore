@@ -1,6 +1,5 @@
 *.gem
 .bundle
-Gemfile.lock
 pkg/*
 rdoc/
 doc/
@@ -12,3 +11,4 @@ examples/*.html
 .rvmrc
 .rbenv-version
 tmp/
+vendor

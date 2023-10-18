@@ -6,6 +6,10 @@ module Tire
     include Test::Integration
 
     context "Custom filters score queries" do
+      setup do
+        # CUSTOM_FILTERS_SCORE was deprecated in ElasticSearch 0.9 and removed in 1.0
+        omit 'Skipping because test is obsolete'
+      end
 
       should "score the document based on a matching filter" do
         s = Tire.search('articles-test') do
