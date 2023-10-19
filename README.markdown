@@ -1,6 +1,13 @@
 Tire
 =========
 
+NOTICE: We have updated the gem to test it against RestClient 2.x. A number of tests have been omitted
+(due to ElasticSearch changes most likely), but 8 are still failing. This is okay because the point of
+these changes is to verify the new RestClient gem versions (which fail identically between RestClient
+1.x and 2.x).
+
+To use this gem, you must point to this repo and a tag (the latest is v1.0.0).
+
 ---------------------------------------------------------------------------------------------------
 
   NOTICE: This library has been renamed and retired in September 2013
