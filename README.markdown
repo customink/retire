@@ -1,6 +1,8 @@
 Tire
 =========
 
+[![Overall](https://img.shields.io/endpoint?style=flat&url=https://app.opslevel.com/api/service_level/PH28uM8uFFlMi7QGCDAgnCQOPTe6ZgbaJsAYiZgZk0w)](https://app.opslevel.com/services/retire/maturity-report)
+
 NOTICE: We have updated the gem to test it against RestClient 2.x. A number of tests have been omitted
 (due to ElasticSearch changes most likely), but 8 are still failing. This is okay because the point of
 these changes is to verify the new RestClient gem versions (which fail identically between RestClient
